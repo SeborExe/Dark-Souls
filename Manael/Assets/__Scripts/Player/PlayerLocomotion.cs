@@ -11,6 +11,7 @@ namespace SH
         Vector3 moveDirection;
 
         [HideInInspector] public Transform myTransform;
+        [HideInInspector] public AnimationHandler animationHandler;
 
         public new Rigidbody rigidbody;
         public GameObject normalCamera;
@@ -23,8 +24,10 @@ namespace SH
         {
             rigidbody = GetComponent<Rigidbody>();
             inputHandler = GetComponent<InputHandler>();
+            animationHandler = GetComponentInChildren<AnimationHandler>();
             cameraObject = Camera.main.transform;
             myTransform = transform;
+            animationHandler.Initialize();
         }
 
         #region movement
@@ -69,6 +72,13 @@ namespace SH
 
             Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
             rigidbody.velocity = projectedVelocity;
+
+            animationHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0);
+
+            if (animationHandler.canRotate)
+            {
+                HandlerRotation(delta);
+            }
         }
 
         #endregion
