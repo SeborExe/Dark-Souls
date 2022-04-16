@@ -30,6 +30,15 @@ namespace SH
             animationHandler.Initialize();
         }
 
+        private void Update()
+        {
+            float delta = Time.deltaTime;
+
+            inputHandler.TickInput(delta);
+            HandleMovement(delta);
+            HandleRollingAndSprinting(delta);
+        }
+
         #region movement
 
         Vector3 normalVector;
@@ -57,12 +66,8 @@ namespace SH
             myTransform.rotation = targetRotation;
         }
 
-        private void Update()
+        public void HandleMovement(float delta)
         {
-            float delta = Time.deltaTime;
-
-            inputHandler.TickInput(delta);
-
             moveDirection = cameraObject.forward * inputHandler.vertical;
             moveDirection += cameraObject.right * inputHandler.horizontal;
             moveDirection.Normalize();
@@ -79,6 +84,31 @@ namespace SH
             if (animationHandler.canRotate)
             {
                 HandlerRotation(delta);
+            }
+        }
+
+        public void HandleRollingAndSprinting(float delta)
+        {
+            if (animationHandler.anim.GetBool("isInteracting"))
+                return;
+
+            if (inputHandler.rollFlag)
+            {
+                moveDirection = cameraObject.forward * inputHandler.vertical;
+                moveDirection += cameraObject.right * inputHandler.horizontal;
+
+                if (inputHandler.moveAmount > 0)
+                {
+                    animationHandler.PlayTargetAnimation("Roll", true);
+                    moveDirection.y = 0;
+                    Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
+                    myTransform.rotation = rollRotation;
+                }
+                else
+                {
+                    //animationHandler.PlayTargetAnimation("Backstep", true);
+                    return;
+                }
             }
         }
 
