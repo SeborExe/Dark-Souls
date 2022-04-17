@@ -8,6 +8,7 @@ namespace SH
     {
         Transform cameraObject;
         InputHandler inputHandler;
+        PlayerManager playerManager;
         Vector3 moveDirection;
 
         [HideInInspector] public Transform myTransform;
@@ -16,31 +17,20 @@ namespace SH
         public new Rigidbody rigidbody;
         public GameObject normalCamera;
 
-        [Header("Stats")]
+        [Header("Movement Stats")]
         [SerializeField] float movementSpeed = 5f;
         [SerializeField] float sprintSpeed = 7f;
         [SerializeField] float rotationSpeed = 10f;
 
-        public bool isSprinting;
-
         private void Start()
         {
+            playerManager = GetComponent<PlayerManager>();
             rigidbody = GetComponent<Rigidbody>();
             inputHandler = GetComponent<InputHandler>();
             animationHandler = GetComponentInChildren<AnimationHandler>();
             cameraObject = Camera.main.transform;
             myTransform = transform;
             animationHandler.Initialize();
-        }
-
-        private void Update()
-        {
-            float delta = Time.deltaTime;
-
-            isSprinting = inputHandler.b_Input;
-            inputHandler.TickInput(delta);
-            HandleMovement(delta);
-            HandleRollingAndSprinting(delta);
         }
 
         #region movement
@@ -85,7 +75,7 @@ namespace SH
             if (inputHandler.sprintFlag)
             {
                 speed = sprintSpeed;
-                isSprinting = true;
+                playerManager.isSprinting = true;
                 moveDirection *= speed;
             }
             else
@@ -96,7 +86,7 @@ namespace SH
             Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
             rigidbody.velocity = projectedVelocity;
 
-            animationHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, isSprinting);
+            animationHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
 
             if (animationHandler.canRotate)
             {
@@ -123,9 +113,7 @@ namespace SH
                 }
                 else
                 {
-                    //animationHandler.PlayTargetAnimation("Backstep", true);
-                    Debug.Log("Backstep");
-                    //return;
+                    animationHandler.PlayTargetAnimation("backStep", true);
                 }
             }
         }
