@@ -60,6 +60,8 @@ namespace SH
         {
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
+            inputHandler.rb_input = false;
+            inputHandler.rt_input = false;
 
             if (isInAir)
             {
