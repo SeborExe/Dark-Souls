@@ -16,6 +16,8 @@ namespace SH
 
         [Header("Player flags")]
         public bool isSprinting;
+        public bool isInAir;
+        public bool isGrounded;
 
         private void Awake()
         {
@@ -40,6 +42,7 @@ namespace SH
             inputHandler.TickInput(delta);
             playerLocomotion.HandleMovement(delta);
             playerLocomotion.HandleRollingAndSprinting(delta);
+            playerLocomotion.HandleFall(delta, playerLocomotion.moveDirection);
         }
 
         private void FixedUpdate()
@@ -58,6 +61,11 @@ namespace SH
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
             playerManager.isSprinting = inputHandler.b_Input;
+
+            if (isInAir)
+            {
+                playerLocomotion.inAirTimer = playerLocomotion.inAirTimer + Time.deltaTime;
+            }
         }
     }
 }
