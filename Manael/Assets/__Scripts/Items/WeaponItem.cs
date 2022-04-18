@@ -9,6 +9,10 @@ namespace SH
     {
         public GameObject modelPrefab;
         public bool isUnarmed;
+
+        [Header("One Hand attack animations")]
+        public string OH_Light_attack_01; //One hand light attack one
+        public string OH_Heavy_attack_01;
     }
 }
 

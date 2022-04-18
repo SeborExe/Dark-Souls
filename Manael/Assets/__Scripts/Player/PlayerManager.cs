@@ -60,7 +60,6 @@ namespace SH
         {
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
-            playerManager.isSprinting = inputHandler.b_Input;
 
             if (isInAir)
             {
