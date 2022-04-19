@@ -21,7 +21,7 @@ namespace SH
 
         private void Awake()
         {
-            cameraHandler = CameraHandler.sigleton;
+            cameraHandler = FindObjectOfType<CameraHandler>();
         }
 
 
