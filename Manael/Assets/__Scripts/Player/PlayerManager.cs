@@ -18,6 +18,7 @@ namespace SH
         public bool isSprinting;
         public bool isInAir;
         public bool isGrounded;
+        public bool canDoCombo;
 
         private void Awake()
         {
@@ -36,6 +37,7 @@ namespace SH
         private void Update()
         {
             isInteracting = anim.GetBool("isInteracting");
+            canDoCombo = anim.GetBool("canDoCombo");
 
             float delta = Time.deltaTime;
 
