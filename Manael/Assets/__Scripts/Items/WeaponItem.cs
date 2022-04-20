@@ -10,6 +10,10 @@ namespace SH
         public GameObject modelPrefab;
         public bool isUnarmed;
 
+        [Header("Idle Animations")]
+        public string Right_Hand_Idle;
+        public string Left_Hand_Idle;
+
         [Header("One Hand attack animations")]
         public string OH_Light_attack_01;//One hand light attack one
         public string OH_Light_attack_02;
