@@ -10,13 +10,21 @@ namespace SH
         public int maxHealth;
         public int currentHealth;
 
-        public HealthBar healthBar;
+        public int staminaLevel = 10;
+        public int maxStamina;
+        public int currentStamina;
+
+        HealthBar healthBar;
+        StaminaBar staminaBar;
 
         AnimationHandler animationHandler;
 
         private void Awake()
         {
             animationHandler = GetComponentInChildren<AnimationHandler>();
+
+            healthBar = FindObjectOfType<HealthBar>();
+            staminaBar = FindObjectOfType<StaminaBar>();
         }
 
         private void Start()
@@ -24,12 +32,22 @@ namespace SH
             maxHealth = SetMaxLevelHalth();
             currentHealth = maxHealth;
             healthBar.SetMaxHealth(maxHealth);
+
+            maxStamina = SetMaxStamina();
+            currentStamina = maxStamina;
+            staminaBar.SetMaxStamina(maxStamina);
         }
 
         private int SetMaxLevelHalth()
         {
             maxHealth = healthLevel * 10;
             return maxHealth;
+        }
+
+        private int SetMaxStamina()
+        {
+            maxStamina = staminaLevel * 10;
+            return maxStamina;
         }
 
         public void TakeDamage(int damage)
@@ -45,6 +63,13 @@ namespace SH
                 currentHealth = 0;
                 animationHandler.PlayTargetAnimation("Dead_01", true);
             }
+        }
+
+        public void TakeStaminaDamage(int damage)
+        {
+            currentStamina -= damage;
+
+            staminaBar.SetCurrentStamina(currentStamina);
         }
     }
 }
