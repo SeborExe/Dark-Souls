@@ -18,10 +18,11 @@ namespace SH
         public bool isSprinting;
         public bool isInAir;
         public bool isGrounded;
+        public bool canDoCombo;
 
         private void Awake()
         {
-            cameraHandler = CameraHandler.sigleton;
+            cameraHandler = FindObjectOfType<CameraHandler>();
         }
 
 
@@ -36,6 +37,7 @@ namespace SH
         private void Update()
         {
             isInteracting = anim.GetBool("isInteracting");
+            canDoCombo = anim.GetBool("canDoCombo");
 
             float delta = Time.deltaTime;
 
@@ -62,6 +64,10 @@ namespace SH
             inputHandler.sprintFlag = false;
             inputHandler.rb_input = false;
             inputHandler.rt_input = false;
+            inputHandler.d_pad_up = false;
+            inputHandler.d_pad_down = false;
+            inputHandler.d_pad_left = false;
+            inputHandler.d_pad_right = false;
 
             if (isInAir)
             {

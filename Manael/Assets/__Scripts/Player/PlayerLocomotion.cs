@@ -184,7 +184,7 @@ namespace SH
                     }
                     else
                     {
-                        animationHandler.PlayTargetAnimation("Locomotion", false);
+                        animationHandler.PlayTargetAnimation("Empty", false);
                         inAirTimer = 0;
                     }
 
@@ -210,6 +210,15 @@ namespace SH
                     rigidbody.velocity = vel * (movementSpeed / 2);
                     playerManager.isInAir = true;
                 }
+            }
+
+            if (playerManager.isInteracting || inputHandler.moveAmount > 0)
+            {
+                myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime / 0.1f);
+            }
+            else
+            {
+                myTransform.position = targetPosition;
             }
 
             if (playerManager.isGrounded)

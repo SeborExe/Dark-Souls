@@ -15,14 +15,20 @@ namespace SH
         public bool b_Input;
         public bool rb_input;
         public bool rt_input;
+        public bool d_pad_up;
+        public bool d_pad_down;
+        public bool d_pad_left;
+        public bool d_pad_right;
 
         public bool rollFlag;
         public bool sprintFlag;
+        public bool comboFlag;
         public float rollInputTimer;
 
         PlayerControls inputActions;
         PlayerAttacker playerAttacker;
         PlayerInventory playerInventory;
+        PlayerManager playerManager;
 
         Vector2 movementInput;
         Vector2 cameraInput;
@@ -31,6 +37,7 @@ namespace SH
         {
             playerAttacker = GetComponent<PlayerAttacker>();
             playerInventory = GetComponent<PlayerInventory>();
+            playerManager = GetComponent<PlayerManager>();
         }
 
         public void OnEnable()
@@ -55,6 +62,7 @@ namespace SH
             MoveInput(delta);
             HandleRollInput(delta);
             HandleAttackInput(delta);
+            HandleQuickSlotInput();
         }
 
         private void MoveInput(float delta)
@@ -95,12 +103,44 @@ namespace SH
 
             if (rb_input)
             {
-                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+                if (playerManager.canDoCombo)
+                {
+                    comboFlag = true;
+                    playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
+                    comboFlag = false;
+                }
+                else
+                {
+                    if (playerManager.isInteracting)
+                        return;
+
+                    if (playerManager.canDoCombo)
+                        return;
+
+                    playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+                }
+
             }
 
             if (rt_input)
             {
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            }
+        }
+
+        private void HandleQuickSlotInput()
+        {
+            inputActions.PlayerQuickSlots.DPadRight.performed += i => d_pad_right = true;
+            inputActions.PlayerQuickSlots.DPadLeft.performed += i => d_pad_left = true;
+
+            if (d_pad_right)
+            {
+                playerInventory.ChangeRightWeapon();
+            }
+
+            else if (d_pad_left)
+            {
+                playerInventory.ChangeLeftWeapon();
             }
         }
     }
