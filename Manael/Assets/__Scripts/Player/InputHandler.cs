@@ -15,6 +15,10 @@ namespace SH
         public bool b_Input;
         public bool rb_input;
         public bool rt_input;
+        public bool d_pad_up;
+        public bool d_pad_down;
+        public bool d_pad_left;
+        public bool d_pad_right;
 
         public bool rollFlag;
         public bool sprintFlag;
@@ -58,6 +62,7 @@ namespace SH
             MoveInput(delta);
             HandleRollInput(delta);
             HandleAttackInput(delta);
+            HandleQuickSlotInput();
         }
 
         private void MoveInput(float delta)
@@ -120,6 +125,22 @@ namespace SH
             if (rt_input)
             {
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            }
+        }
+
+        private void HandleQuickSlotInput()
+        {
+            inputActions.PlayerQuickSlots.DPadRight.performed += i => d_pad_right = true;
+            inputActions.PlayerQuickSlots.DPadLeft.performed += i => d_pad_left = true;
+
+            if (d_pad_right)
+            {
+                playerInventory.ChangeRightWeapon();
+            }
+
+            else if (d_pad_left)
+            {
+                playerInventory.ChangeLeftWeapon();
             }
         }
     }
