@@ -17,6 +17,7 @@ namespace SH
         public bool rb_Input;
         public bool rt_Input;
         public bool jump_Input;
+        public bool inventory_Input;
 
         public bool d_pad_up;
         public bool d_pad_down;
@@ -26,12 +27,14 @@ namespace SH
         public bool rollFlag;
         public bool sprintFlag;
         public bool comboFlag;
+        public bool inventoryFlag;
         public float rollInputTimer;
 
         PlayerControls inputActions;
         PlayerAttacker playerAttacker;
         PlayerInventory playerInventory;
         PlayerManager playerManager;
+        UIManager uIManager;
 
         Vector2 movementInput;
         Vector2 cameraInput;
@@ -41,6 +44,7 @@ namespace SH
             playerAttacker = GetComponent<PlayerAttacker>();
             playerInventory = GetComponent<PlayerInventory>();
             playerManager = GetComponent<PlayerManager>();
+            uIManager = FindObjectOfType<UIManager>();
         }
 
         public void OnEnable()
@@ -68,6 +72,7 @@ namespace SH
             HandleQuickSlotInput();
             HandleInteractableButtonInput();
             HandleJumpInput();
+            HandleInventoryWindow();
         }
 
         private void MoveInput(float delta)
@@ -157,6 +162,25 @@ namespace SH
         private void HandleJumpInput()
         {
             inputActions.PlayerActions.Jump.performed += i => jump_Input = true;
+        }
+
+        private void HandleInventoryWindow()
+        {
+            inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
+
+            if (inventory_Input)
+            {
+                inventoryFlag = !inventoryFlag;
+
+                if (inventoryFlag)
+                {
+                    uIManager.OpenSelectWindow();
+                }
+                else
+                {
+                    uIManager.CloseSelectWindow();
+                }
+            }
         }
     }
 }
