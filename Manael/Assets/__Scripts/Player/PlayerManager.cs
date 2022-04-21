@@ -9,8 +9,8 @@ namespace SH
         InputHandler inputHandler;
         CameraHandler cameraHandler;
         PlayerLocomotion playerLocomotion;
-        PlayerManager playerManager;
         Animator anim;
+        InteractableUI interactableUI;
 
         public bool isInteracting;
 
@@ -31,7 +31,7 @@ namespace SH
             inputHandler = GetComponent<InputHandler>();
             anim = GetComponentInChildren<Animator>();
             playerLocomotion = GetComponent<PlayerLocomotion>();
-            playerManager = GetComponent<PlayerManager>();
+            interactableUI = FindObjectOfType<InteractableUI>();
         }
 
         private void Update()
@@ -89,7 +89,7 @@ namespace SH
                     if (interactableObject != null)
                     {
                         string interactableText = interactableObject.interactableText;
-                        //Set the ui text to the interactable object
+                        interactableUI.interactableText.text = interactableText;
 
                         if (inputHandler.a_Input)
                         {
