@@ -7,7 +7,9 @@ namespace SH
 {
     public class InteractableUI : MonoBehaviour
     {
-        public Text interactableText;
+        public Text interactableText;   
+        public Text itemText;
+        public RawImage itemImage;
     }
 }
 

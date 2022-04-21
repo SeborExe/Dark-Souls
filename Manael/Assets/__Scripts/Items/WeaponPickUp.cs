@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SH
 {
@@ -28,6 +29,10 @@ namespace SH
             playerLocomotion.rigidbody.velocity = Vector3.zero; //Stop when picking item
             animationHandler.PlayTargetAnimation("Pick Up Item", true);
             playerInventory.weaponsInventory.Add(weapon);
+
+            playerManager.itemInteractableObject.GetComponentInChildren<Text>().text = weapon.itemName;
+            playerManager.itemInteractableObject.GetComponentInChildren<RawImage>().texture = weapon.itemIcon.texture;
+            playerManager.PickUpItem();
             Destroy(gameObject);
 
         }

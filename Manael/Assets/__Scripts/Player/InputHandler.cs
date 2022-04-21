@@ -14,8 +14,10 @@ namespace SH
 
         public bool b_Input;
         public bool a_Input;
-        public bool rb_input;
-        public bool rt_input;
+        public bool rb_Input;
+        public bool rt_Input;
+        public bool jump_Input;
+
         public bool d_pad_up;
         public bool d_pad_down;
         public bool d_pad_left;
@@ -65,6 +67,7 @@ namespace SH
             HandleAttackInput(delta);
             HandleQuickSlotInput();
             HandleInteractableButtonInput();
+            HandleJumpInput();
         }
 
         private void MoveInput(float delta)
@@ -100,10 +103,10 @@ namespace SH
 
         private void HandleAttackInput(float delta)
         {
-            inputActions.PlayerActions.RB.performed += i => rb_input = true;
-            inputActions.PlayerActions.RT.performed += i => rt_input = true;
+            inputActions.PlayerActions.RB.performed += i => rb_Input = true;
+            inputActions.PlayerActions.RT.performed += i => rt_Input = true;
 
-            if (rb_input)
+            if (rb_Input)
             {
                 if (playerManager.canDoCombo)
                 {
@@ -124,7 +127,7 @@ namespace SH
 
             }
 
-            if (rt_input)
+            if (rt_Input)
             {
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
             }
@@ -149,6 +152,11 @@ namespace SH
         private void HandleInteractableButtonInput()
         {
             inputActions.PlayerActions.A.performed += i => a_Input = true;
+        }
+
+        private void HandleJumpInput()
+        {
+            inputActions.PlayerActions.Jump.performed += i => jump_Input = true;
         }
     }
 }
