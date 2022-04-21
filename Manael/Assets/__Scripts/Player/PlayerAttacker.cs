@@ -8,12 +8,14 @@ namespace SH
     {
         AnimationHandler animationHandler;
         InputHandler inputHandler;
+        WeaponSlotManager weaponSlotManager;
         public string lastAttack;
 
         private void Awake()
         {
             animationHandler = GetComponentInChildren<AnimationHandler>();
             inputHandler = GetComponent<InputHandler>();
+            weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
         }
 
         public void HandleWeaponCombo(WeaponItem weapon)
@@ -31,12 +33,14 @@ namespace SH
 
         public void HandleLightAttack(WeaponItem weapon)
         {
+            weaponSlotManager.attackingWeapon = weapon;
             animationHandler.PlayTargetAnimation(weapon.OH_Light_attack_01, true);
             lastAttack = weapon.OH_Light_attack_01;
         }
 
         public void HandleHeavyAttack(WeaponItem weapon)
         {
+            weaponSlotManager.attackingWeapon = weapon;
             animationHandler.PlayTargetAnimation(weapon.OH_Heavy_attack_01, true);
             lastAttack = weapon.OH_Heavy_attack_01;
         }

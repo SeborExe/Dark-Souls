@@ -23,14 +23,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1376105239}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.11536355, y: 0.32254687, z: 0.9393834, w: -0.014615953}
+  m_LocalPosition: {x: -0.005, y: -0.046, z: 0.077}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4806628264517928461}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -37.058, y: -376.464, z: -172.665}
 --- !u!1 &12659951073127200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,9 +1076,11 @@ GameObject:
   - component: {fileID: 3715845956765069216}
   - component: {fileID: 3715845956765069222}
   - component: {fileID: 1238094196}
+  - component: {fileID: 1238094197}
+  - component: {fileID: 1238094198}
   m_Layer: 10
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1148,8 +1150,16 @@ MonoBehaviour:
   mouseX: 0
   mouseY: 0
   b_Input: 0
+  a_Input: 0
+  rb_input: 0
+  rt_input: 0
+  d_pad_up: 0
+  d_pad_down: 0
+  d_pad_left: 0
+  d_pad_right: 0
   rollFlag: 0
   sprintFlag: 0
+  comboFlag: 0
   rollInputTimer: 0
 --- !u!114 &3715845956765069216
 MonoBehaviour:
@@ -1172,6 +1182,7 @@ MonoBehaviour:
   groundDirectionRayDistance: 0.2
   inAirTimer: 0
   movementSpeed: 5
+  walkingSpeed: 2
   sprintSpeed: 7
   rotationSpeed: 10
   fallingSpeed: 80
@@ -1187,10 +1198,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb61d1b12cbe2c46bf22bf632579727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableUIGameObject: {fileID: 0}
+  itemInteractableObject: {fileID: 0}
+  fadeSpeed: 0.1
   isInteracting: 0
   isSprinting: 0
   isInAir: 0
   isGrounded: 0
+  canDoCombo: 0
 --- !u!114 &1238094196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1205,6 +1220,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightWeapon: {fileID: 11400000, guid: a3373205b48abcb498d57312917c566a, type: 2}
   leftWeapon: {fileID: 11400000, guid: a3373205b48abcb498d57312917c566a, type: 2}
+  unarmedWeapon: {fileID: 11400000, guid: 3b612595f3dc9a248b55556b257f1185, type: 2}
+  weaponsInRightHandSlots:
+  - {fileID: 11400000, guid: a3373205b48abcb498d57312917c566a, type: 2}
+  - {fileID: 11400000, guid: a3373205b48abcb498d57312917c566a, type: 2}
+  weaponsInLeftHandSlots:
+  - {fileID: 11400000, guid: a3373205b48abcb498d57312917c566a, type: 2}
+  - {fileID: 11400000, guid: a3373205b48abcb498d57312917c566a, type: 2}
+  currentRightWeaponIndex: -1
+  currentLeftWeaponIndex: -1
+  weaponsInventory: []
+--- !u!114 &1238094197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3715845956765069212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f6bf1899fe66e42b9ed707b4c8eaf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lastAttack: 
+--- !u!114 &1238094198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3715845956765069212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a85e74793dacec4b8d762b325cd1c7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthLevel: 10
+  maxHealth: 0
+  currentHealth: 0
+  staminaLevel: 10
+  maxStamina: 0
+  currentStamina: 0
 --- !u!1 &3783056308225699719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,6 +1817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69f00261cec3c6140941d4716cdf9a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackingWeapon: {fileID: 0}
 --- !u!1 &4665658927782219302
 GameObject:
   m_ObjectHideFlags: 0
