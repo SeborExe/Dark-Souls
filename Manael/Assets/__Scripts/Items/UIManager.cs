@@ -7,6 +7,7 @@ namespace SH
     public class UIManager : MonoBehaviour
     {
         PlayerInventory playerInventory;
+        EquipmentWindowUI equipmentWindowUI;
 
         [Header("UI Windows")]
         public GameObject hudWindow;
@@ -21,11 +22,13 @@ namespace SH
         private void Awake()
         {
             playerInventory = FindObjectOfType<PlayerInventory>();
+            equipmentWindowUI = FindObjectOfType<EquipmentWindowUI>();
         }
 
         private void Start()
         {
             weaponInventorySlots = weaponInventorySlotParent.GetComponentsInChildren<WeaponInventorySlot>();
+            equipmentWindowUI.LoadWeaponOnEquipmentScreen(playerInventory);
         }
 
         public void UpdateUI()
