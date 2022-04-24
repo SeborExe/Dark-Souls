@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace SH
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager : CharacterManager
     {
         InputHandler inputHandler;
         CameraHandler cameraHandler;
