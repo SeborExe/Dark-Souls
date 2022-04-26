@@ -28,13 +28,10 @@ namespace SH
 
         private void Start()
         {
-            rightWeapon = unarmedWeapon;
-            leftWeapon = unarmedWeapon;
-
-            //rightWeapon = weaponsInRightHandSlots[currentRightWeaponIndex];
-            //leftWeapon = weaponsInLeftHandSlots[currentLeftWeaponIndex];
-            //weaponSlotManager.LoadWeaponOnSlot(rightWeapon, false);
-            //weaponSlotManager.LoadWeaponOnSlot(rightWeapon, true);
+            rightWeapon = weaponsInRightHandSlots[0];
+            leftWeapon = weaponsInLeftHandSlots[0];
+            weaponSlotManager.LoadWeaponOnSlot(rightWeapon, false);
+            weaponSlotManager.LoadWeaponOnSlot(leftWeapon, true);
         }
 
         public void ChangeRightWeapon()
