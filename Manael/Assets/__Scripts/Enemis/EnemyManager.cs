@@ -8,7 +8,7 @@ namespace SH
     {
         EnemyLocomotionManager enemyLocomotionManager;
 
-        bool isPerformingAction;
+        public bool isPerformingAction;
 
         [Header("A.I. Settings")]
         public float detectionRadius = 20f;
@@ -22,6 +22,11 @@ namespace SH
 
         private void Update()
         {
+
+        }
+
+        private void FixedUpdate()
+        {
             HandleCurrentAction();
         }
 
@@ -30,6 +35,10 @@ namespace SH
             if (enemyLocomotionManager.currentTarget == null)
             {
                 enemyLocomotionManager.HandleDetection();
+            }
+            else
+            {
+                enemyLocomotionManager.HandleMoveToTarget();
             }
         }
     }
