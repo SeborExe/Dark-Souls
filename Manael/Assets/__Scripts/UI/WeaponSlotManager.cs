@@ -81,6 +81,7 @@ namespace SH
                     animator.CrossFade("Both Arms Empty", 0.2f);
 
                     backSlot.UnloadWeaponAndDestroy();
+
                     if (weaponItem != null)
                     {
                         animator.CrossFade(weaponItem.Right_Hand_Idle, 0.2f);
