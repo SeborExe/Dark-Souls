@@ -26,8 +26,8 @@ namespace SH
         public float inAirTimer;
 
         [Header("Movement Stats")]
-        [SerializeField] float movementSpeed = 5f;
         [SerializeField] float walkingSpeed = 2f;
+        [SerializeField] float movementSpeed = 5f;
         [SerializeField] float sprintSpeed = 7f;
         [SerializeField] float rotationSpeed = 10f;
         [SerializeField] float fallingSpeed = 45f;

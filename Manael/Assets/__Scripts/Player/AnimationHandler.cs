@@ -4,11 +4,10 @@ using UnityEngine;
 
 namespace SH
 {
-    public class AnimationHandler : MonoBehaviour
+    public class AnimationHandler : AnimatorManager
     {
         PlayerManager playerManager;
 
-        public Animator anim;
         InputHandler inputHandler;
         PlayerLocomotion playerLocomotion;
         int vertical;
@@ -95,13 +94,6 @@ namespace SH
 
             anim.SetFloat(vertical, v, 0.1f, Time.deltaTime);
             anim.SetFloat(horizontal, h, 0.1f, Time.deltaTime);
-        }
-
-        public void PlayTargetAnimation(string targetAnim, bool isInteracting)
-        {
-            anim.applyRootMotion = isInteracting;
-            anim.SetBool("isInteracting", isInteracting);
-            anim.CrossFade(targetAnim, 0.2f);
         }
 
         public void CanRotate()
