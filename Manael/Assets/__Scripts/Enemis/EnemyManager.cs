@@ -17,6 +17,7 @@ namespace SH
         public Rigidbody enemyRigidbody;
 
         public bool isPerformingAction;
+        public bool isInteracting;
 
         public float distanceFromTarget;
         public float rotationSpeed = 15f;
@@ -49,6 +50,7 @@ namespace SH
         private void Update()
         {
             HandleRecoveryTimer();
+            isInteracting = enemyAnimatorManager.anim.GetBool("isInteracting");
         }
 
         private void FixedUpdate()
