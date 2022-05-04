@@ -19,7 +19,6 @@ namespace SH
         public bool isPerformingAction;
         public bool isInteracting;
 
-        public float distanceFromTarget;
         public float rotationSpeed = 15f;
         public float maximumAttackRange = 1.5f;
         public float moveSpeed = 1f;
@@ -28,7 +27,6 @@ namespace SH
         public float detectionRadius = 20f;
         public float minimumDetectionAngle = -50f;
         public float maximumDetectionAngle = 50f;
-        public float viewableAngle;
 
         public float currentRecoveryTime = 0;
 
