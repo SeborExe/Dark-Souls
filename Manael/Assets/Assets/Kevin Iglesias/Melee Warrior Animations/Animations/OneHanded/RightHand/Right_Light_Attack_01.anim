@@ -15287,15 +15287,6 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.6666667
-        value: -0.22377135
-        inSlope: 0.022667326
-        outSlope: 0.022667326
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
         time: 0.70000005
         value: -0.22210357
         inSlope: 0.10707742
@@ -15314,10 +15305,10 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.7666667
-        value: -0.20668887
-        inSlope: 0.35849214
-        outSlope: 0.35849214
+        time: 0.76666665
+        value: -0.22377135
+        inSlope: 0.022667326
+        outSlope: 0.022667326
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -64021,15 +64012,6 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.6666667
-        value: -0.22377135
-        inSlope: 0.022667326
-        outSlope: 0.022667326
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
         time: 0.70000005
         value: -0.22210357
         inSlope: 0.10707742
@@ -64048,10 +64030,10 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.7666667
-        value: -0.20668887
-        inSlope: 0.35849214
-        outSlope: 0.35849214
+        time: 0.76666665
+        value: -0.22377135
+        inSlope: 0.022667326
+        outSlope: 0.022667326
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -96550,7 +96532,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.4
-    functionName: OpenRightDamageCollider
+    functionName: OpenDamageCollider
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -96564,7 +96546,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.56666666
-    functionName: CloseRightHandDamageCollider
+    functionName: CloseDamageCollider
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

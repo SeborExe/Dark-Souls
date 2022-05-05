@@ -54,6 +54,7 @@ namespace SH
             {
                 currentHealth = 0;
                 animationHandler.PlayTargetAnimation("Dead_01", true);
+                isDead = true;
             }
         }
 

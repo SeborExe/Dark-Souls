@@ -27,6 +27,8 @@ namespace SH
 
         public void TakeDamage(int damage)
         {
+            if (isDead) return;
+
             currentHealth -= damage;
 
             animator.Play("Damage_01");
@@ -35,6 +37,7 @@ namespace SH
             {
                 currentHealth = 0;
                 animator.Play("Dead_01");
+                isDead = true;
             }
         }
     }

@@ -23,6 +23,8 @@ namespace SH
         public bool isInAir;
         public bool isGrounded;
         public bool canDoCombo;
+        public bool isUsingRightHand;
+        public bool isUsingLeftHand;
 
         [SerializeField] float fadeSpeed = 0.2f;
         bool hide = false;
@@ -50,6 +52,8 @@ namespace SH
 
             isInteracting = anim.GetBool("isInteracting");
             canDoCombo = anim.GetBool("canDoCombo");
+            isUsingRightHand = anim.GetBool("isUsingRightHand");
+            isUsingLeftHand = anim.GetBool("isUsingLeftHand");
             anim.SetBool("isInAir", isInAir);
 
             inputHandler.TickInput(delta);
