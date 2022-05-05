@@ -12,6 +12,7 @@ namespace SH
         PlayerLocomotion playerLocomotion;
         Animator anim;
         InteractableUI interactableUI;
+        PlayerStats playerStats;
 
         [SerializeField] GameObject interactableUIGameObject;
         public GameObject itemInteractableObject;
@@ -25,6 +26,7 @@ namespace SH
         public bool canDoCombo;
         public bool isUsingRightHand;
         public bool isUsingLeftHand;
+        public bool isInvulnerable;
 
         [SerializeField] float fadeSpeed = 0.2f;
         bool hide = false;
@@ -40,6 +42,7 @@ namespace SH
         {
             inputHandler = GetComponent<InputHandler>();
             anim = GetComponentInChildren<Animator>();
+            playerStats = GetComponent<PlayerStats>();
             playerLocomotion = GetComponent<PlayerLocomotion>();
             interactableUI = FindObjectOfType<InteractableUI>();
 
@@ -54,11 +57,14 @@ namespace SH
             canDoCombo = anim.GetBool("canDoCombo");
             isUsingRightHand = anim.GetBool("isUsingRightHand");
             isUsingLeftHand = anim.GetBool("isUsingLeftHand");
+            isInvulnerable = anim.GetBool("isInvulnerable");
             anim.SetBool("isInAir", isInAir);
 
             inputHandler.TickInput(delta);
             playerLocomotion.HandleJumping();
             playerLocomotion.HandleRollingAndSprinting(delta);
+
+            playerStats.RegenerateStamina();
 
             CheckForInteractable();
         }

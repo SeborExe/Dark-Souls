@@ -116,6 +116,16 @@ namespace SH
             anim.SetBool("canDoCombo", false);
         }
 
+        public void EnableIsInvulnerable()
+        {
+            anim.SetBool("isInvulnerable", true);
+        }
+
+        public void DisableIsInbulnerable()
+        {
+            anim.SetBool("isInvulnerable", false);
+        }
+
         private void OnAnimatorMove()
         {
             if (playerManager.isInteracting == false)

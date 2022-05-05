@@ -8,11 +8,16 @@ namespace SH
     {
         HealthBar healthBar;
         StaminaBar staminaBar;
+        PlayerManager playerManager;
 
         AnimationHandler animationHandler;
 
+        float staminaRegenerationAmount = 1;
+        float staminaRegenerationTimer = 0;
+
         private void Awake()
         {
+            playerManager = GetComponent<PlayerManager>();
             animationHandler = GetComponentInChildren<AnimationHandler>();
 
             healthBar = FindObjectOfType<HealthBar>();
@@ -36,7 +41,7 @@ namespace SH
             return maxHealth;
         }
 
-        private int SetMaxStamina()
+        private float SetMaxStamina()
         {
             maxStamina = staminaLevel * 10;
             return maxStamina;
@@ -44,10 +49,12 @@ namespace SH
 
         public void TakeDamage(int damage)
         {
+            if (playerManager.isInvulnerable) return;
+            if (isDead) return;
+
             currentHealth -= damage;
 
             healthBar.SetCurrentHealth(currentHealth);
-
             animationHandler.PlayTargetAnimation("Damage_01", true);
 
             if (currentHealth <= 0)
@@ -63,6 +70,24 @@ namespace SH
             currentStamina -= damage;
 
             staminaBar.SetCurrentStamina(currentStamina);
+        }
+
+        public void RegenerateStamina()
+        {
+            if (playerManager.isInteracting)
+                staminaRegenerationTimer = 0;
+
+            else
+            {
+                staminaRegenerationTimer += Time.deltaTime;
+
+                if (currentStamina < maxStamina && staminaRegenerationTimer > 1f)
+                {
+                    currentStamina += staminaRegenerationAmount * Time.deltaTime;
+                    staminaBar.SetCurrentStamina(Mathf.RoundToInt(currentStamina));
+                }
+            }
+
         }
     }
 }

@@ -5750,15 +5750,15 @@ PrefabInstance:
     - target: {fileID: 1238094196, guid: a295eb70b3f8ebd49b6ac46f0364be10, type: 3}
       propertyPath: leftWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: fa39a8cff5496c04c871b7be3e2eeb90, type: 2}
+      objectReference: {fileID: 11400000, guid: cf909151d152d7340ac63590b4e9cdd2, type: 2}
     - target: {fileID: 1238094196, guid: a295eb70b3f8ebd49b6ac46f0364be10, type: 3}
       propertyPath: weaponsInLeftHandSlots.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: fa39a8cff5496c04c871b7be3e2eeb90, type: 2}
+      objectReference: {fileID: 11400000, guid: cf909151d152d7340ac63590b4e9cdd2, type: 2}
     - target: {fileID: 1238094196, guid: a295eb70b3f8ebd49b6ac46f0364be10, type: 3}
       propertyPath: weaponsInRightHandSlots.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: fa39a8cff5496c04c871b7be3e2eeb90, type: 2}
+      objectReference: {fileID: 11400000, guid: cf909151d152d7340ac63590b4e9cdd2, type: 2}
     - target: {fileID: 3715845956765069212, guid: a295eb70b3f8ebd49b6ac46f0364be10, type: 3}
       propertyPath: m_Name
       value: Player
