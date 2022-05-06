@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477090ccf84f039489c70021f1507ba3, type: 3}
+  m_Name: HealTouch
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 0}
+  itemName: HealTouch
+  spallWarmUpFX: {fileID: 1293630020605024, guid: ea309e8646148c24ab067d84d5d22697,
+    type: 3}
+  spellCastFX: {fileID: 1722726733478836, guid: c1c88308ebb5d2541a282905b854ee4c,
+    type: 3}
+  spellAnimation: PrepearingHealSpell
+  manaCost: 35
+  isFaithSpell: 1
+  isMagicSpell: 0
+  isPyroSpell: 0
+  spellDiscription: 
+  healAmount: 50

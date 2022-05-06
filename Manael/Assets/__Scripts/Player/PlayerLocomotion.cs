@@ -18,6 +18,9 @@ namespace SH
         public new Rigidbody rigidbody;
         public GameObject normalCamera;
 
+        public CapsuleCollider characterCollider;
+        public CapsuleCollider characterCollisionBlocker;
+
         [Header("Ground & Air states")]
         float groundDetectionRayStartPoint = 0.5f;
         [SerializeField] float minimumDistanceNeededToBeginFall = 1f;
@@ -49,6 +52,7 @@ namespace SH
 
             playerManager.isGrounded = true;
             ignoreForGoundCheck = ~(1 << 8 | 1 << 11);
+            Physics.IgnoreCollision(characterCollider, characterCollisionBlocker, true);
         }
 
         #region movement

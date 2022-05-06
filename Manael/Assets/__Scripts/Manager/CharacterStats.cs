@@ -11,8 +11,14 @@ namespace SH
         public int currentHealth;
 
         public int staminaLevel = 10;
-        public int maxStamina;
-        public int currentStamina;
+        public float maxStamina;
+        public float currentStamina;
+
+        public int manaLevel = 10;
+        public float maxMana;
+        public float currentMana;
+
+        public bool isDead;
     }
 }
 

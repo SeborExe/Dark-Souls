@@ -9,6 +9,7 @@ namespace SH
         public WeaponHolderSlot leftHandSlot;
         public WeaponHolderSlot rightHandSlot;
         WeaponHolderSlot backSlot;
+        PlayerManager playerManager;
 
         DamageCollider leftHandDamageCollider;
         DamageCollider rightHandDamageCollider;
@@ -24,6 +25,7 @@ namespace SH
 
         private void Awake()
         {
+            playerManager = GetComponentInParent<PlayerManager>();
             animator = GetComponent<Animator>();
             quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
             playerStats = GetComponentInParent<PlayerStats>();
@@ -112,24 +114,25 @@ namespace SH
             rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
         }
 
-        public void OpenRightDamageCollider()
+        public void OpenDamageCollider()
         {
-            rightHandDamageCollider.EnabelDamageCollider();
+            if (playerManager.isUsingRightHand)
+            {
+                rightHandDamageCollider.EnabelDamageCollider();
+            }
+            else if (playerManager.isUsingLeftHand)
+            {
+                leftHandDamageCollider.EnabelDamageCollider();
+            }
         }
 
-        public void OpenLeftHandDamageCollider()
+        public void CloseDamageCollider()
         {
-            leftHandDamageCollider.EnabelDamageCollider();
-        }
+            if (rightHandDamageCollider != null)
+                rightHandDamageCollider.DisableDamageCollider();
 
-        public void CloseRightHandDamageCollider()
-        {
-            rightHandDamageCollider.DisableDamageCollider();
-        }
-
-        public void CloseLeftHandDamageCollider()
-        {
-            leftHandDamageCollider.DisableDamageCollider();
+            if (leftHandDamageCollider != null)
+                leftHandDamageCollider.DisableDamageCollider();
         }
 
         #endregion
