@@ -11,6 +11,8 @@ namespace SH
 
         public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
         {
+            if (enemyStats.isDead) return null;
+
             float distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, enemyManager.transform.position);
 
             HandleRotateTowardsToTarget(enemyManager);
