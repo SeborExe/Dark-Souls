@@ -89,6 +89,16 @@ namespace SH
             }
 
         }
+
+        public void HealPlayer(int amount)
+        {
+            currentHealth += amount;
+
+            if (currentHealth > maxHealth)
+                currentHealth = maxHealth;
+
+            healthBar.SetCurrentHealth(currentHealth);
+        }
     }
 }
 

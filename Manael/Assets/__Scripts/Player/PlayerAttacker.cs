@@ -8,6 +8,7 @@ namespace SH
     {
         AnimationHandler animationHandler;
         PlayerManager playerManager;
+        PlayerStats playerStats;
         PlayerInventory playerInventory;
         InputHandler inputHandler;
         WeaponSlotManager weaponSlotManager;
@@ -17,6 +18,7 @@ namespace SH
         {
             animationHandler = GetComponent<AnimationHandler>();
             playerManager = GetComponentInParent<PlayerManager>();
+            playerStats = GetComponentInParent<PlayerStats>();
             playerInventory = GetComponentInParent<PlayerInventory>();
             weaponSlotManager = GetComponent<WeaponSlotManager>();
             inputHandler = GetComponentInParent<InputHandler>();
@@ -113,9 +115,14 @@ namespace SH
                 if (playerInventory.currentSpell != null && playerInventory.currentSpell.isFaithSpell)
                 {
                     //Check for FP
-                    //Attempt to cast spell
+                    playerInventory.currentSpell.AttemptToCastSpell(animationHandler, playerStats);
                 }
             }
+        }
+
+        private void SuccessfulyCastSpell()
+        {
+            playerInventory.currentSpell.SuccessfullyCastSpell(animationHandler, playerStats);
         }
 
         #endregion
