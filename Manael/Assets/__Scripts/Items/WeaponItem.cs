@@ -26,6 +26,12 @@ namespace SH
         public int baseStamina;
         public float lightAttackMultiplier;
         public float heavyAttackMultiplier;
+
+        [Header("Weapon type")]
+        public bool isSpellCaster;
+        public bool isFaithCaster;
+        public bool isPyroCaster;
+        public bool isMeleeWeapon;
     }
 }
 
