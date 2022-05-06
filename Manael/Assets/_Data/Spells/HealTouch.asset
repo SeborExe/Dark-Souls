@@ -19,6 +19,7 @@ MonoBehaviour:
   spellCastFX: {fileID: 1722726733478836, guid: c1c88308ebb5d2541a282905b854ee4c,
     type: 3}
   spellAnimation: PrepearingHealSpell
+  manaCost: 35
   isFaithSpell: 1
   isMagicSpell: 0
   isPyroSpell: 0

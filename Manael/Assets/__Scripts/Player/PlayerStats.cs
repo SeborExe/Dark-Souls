@@ -8,6 +8,7 @@ namespace SH
     {
         HealthBar healthBar;
         StaminaBar staminaBar;
+        ManaBar manaBar;
         PlayerManager playerManager;
 
         AnimationHandler animationHandler;
@@ -22,6 +23,7 @@ namespace SH
 
             healthBar = FindObjectOfType<HealthBar>();
             staminaBar = FindObjectOfType<StaminaBar>();
+            manaBar = FindObjectOfType<ManaBar>();
         }
 
         private void Start()
@@ -33,6 +35,10 @@ namespace SH
             maxStamina = SetMaxStamina();
             currentStamina = maxStamina;
             staminaBar.SetMaxStamina(maxStamina);
+
+            maxMana = SetMaxMana();
+            currentMana = maxMana;
+            manaBar.SetMaxMana(maxMana);
         }
 
         private int SetMaxLevelHalth()
@@ -45,6 +51,12 @@ namespace SH
         {
             maxStamina = staminaLevel * 10;
             return maxStamina;
+        }
+
+        private float SetMaxMana()
+        {
+            maxMana = manaLevel * 10;
+            return maxMana;
         }
 
         public void TakeDamage(int damage)
@@ -98,6 +110,18 @@ namespace SH
                 currentHealth = maxHealth;
 
             healthBar.SetCurrentHealth(currentHealth);
+        }
+
+        public void DeductManaPoints(int mana)
+        {
+            currentMana -= mana;
+
+            if (currentMana < 0)
+            {
+                currentMana = 0;
+            }
+
+            manaBar.SetCurrentMana(currentMana);
         }
     }
 }

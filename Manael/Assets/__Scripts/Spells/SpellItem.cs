@@ -10,6 +10,9 @@ namespace SH
         public GameObject spellCastFX;
         public string spellAnimation;
 
+        [Header("Spell cost")]
+        public int manaCost;
+
         [Header("Spell type")]
         public bool isFaithSpell;
         public bool isMagicSpell;
@@ -26,6 +29,7 @@ namespace SH
         public virtual void SuccessfullyCastSpell(AnimationHandler animationHandler, PlayerStats playerStats)
         {
             Debug.Log("You successfuly cast a spell");
+            playerStats.DeductManaPoints(manaCost);
         }
     }
 }

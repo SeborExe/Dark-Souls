@@ -110,12 +110,19 @@ namespace SH
 
         private void PerformRBMagicAction(WeaponItem weapon)
         {
+            if (playerManager.isInteracting) return;
+
             if (weapon.isFaithCaster)
             {
                 if (playerInventory.currentSpell != null && playerInventory.currentSpell.isFaithSpell)
                 {
-                    //Check for FP
-                    playerInventory.currentSpell.AttemptToCastSpell(animationHandler, playerStats);
+                    if (playerStats.currentMana >= playerInventory.currentSpell.manaCost)
+                        playerInventory.currentSpell.AttemptToCastSpell(animationHandler, playerStats);
+
+                    else
+                    {
+                        animationHandler.PlayTargetAnimation("Shrug", true);
+                    }
                 }
             }
         }
