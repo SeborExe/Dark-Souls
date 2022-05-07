@@ -35,6 +35,7 @@ namespace SH
         private void Awake()
         {
             cameraHandler = FindObjectOfType<CameraHandler>();
+            backStabCollider = GetComponentInChildren<BackStabCollider>();
         }
 
 

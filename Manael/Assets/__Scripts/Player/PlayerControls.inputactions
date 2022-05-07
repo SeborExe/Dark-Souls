@@ -244,6 +244,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Critical Attack",
+                    "type": "Button",
+                    "id": "6dd8ef9f-2606-43e0-a149-e3cf48d4aee2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "RT",
                     "type": "Button",
                     "id": "bb3551ed-98e1-441e-b4bd-b13f51822e5e",
@@ -472,6 +481,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0cdb7f06-3382-438e-92fc-a1e21f24ff34",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Critical Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "972dc9ed-5c99-4532-908e-7d0b99613af2",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Critical Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

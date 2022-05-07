@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Shootable
+  - Enemy
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -14,11 +16,11 @@ TagManager:
   - UI
   - 
   - 
-  - Lighting
-  - Ground
-  - Postprocessing
-  - 
-  - 
+  - Enviroment
+  - Character
+  - Character Collision Blocker
+  - Player
+  - BackStab
   - 
   - 
   - 

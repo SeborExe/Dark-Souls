@@ -17,6 +17,7 @@ namespace SH
         public bool y_Input;
         public bool rb_Input;
         public bool rt_Input;
+        public bool critical_attack_Input;
         public bool jump_Input;
         public bool inventory_Input;
         public bool lockOn_Input;
@@ -48,6 +49,8 @@ namespace SH
         Vector2 movementInput;
         Vector2 cameraInput;
 
+        public Transform criticalAttackRaycastStartPoint;
+
         private void Awake()
         {
             playerAttacker = GetComponentInChildren<PlayerAttacker>();
@@ -77,6 +80,7 @@ namespace SH
                 inputActions.PlayerMovement.LockOnTargetRight.performed += i => right_Stick_Right_Input = true;
                 inputActions.PlayerMovement.LockOnTargetLeft.performed += i => right_Stick_Left_Input = true;
                 inputActions.PlayerActions.Y.performed += i => y_Input = true;
+                inputActions.PlayerActions.CriticalAttack.performed += i => critical_attack_Input = true;
             }
 
             inputActions.Enable();
@@ -96,6 +100,7 @@ namespace SH
             HandleInventoryWindow();
             HandleLockOnInput();
             HandleTwoHandInput();
+            HandleCriticalAttackInput();
         }
 
         private void HandleMoveInput(float delta)
@@ -243,6 +248,15 @@ namespace SH
                     weaponSlotManager.LoadWeaponOnSlot(playerInventory.rightWeapon, false);
                     weaponSlotManager.LoadWeaponOnSlot(playerInventory.leftWeapon, true);
                 }
+            }
+        }
+
+        private void HandleCriticalAttackInput()
+        {
+            if (critical_attack_Input)
+            {
+                critical_attack_Input = false;
+                playerAttacker.AttemptBackStabOrRipost();
             }
         }
     }
