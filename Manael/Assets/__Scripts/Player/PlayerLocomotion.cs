@@ -13,7 +13,7 @@ namespace SH
         public Vector3 moveDirection;
 
         [HideInInspector] public Transform myTransform;
-        [HideInInspector] public AnimationHandler animationHandler;
+        [HideInInspector] public PlayerAnimatorManager animationHandler;
 
         public new Rigidbody rigidbody;
         public GameObject normalCamera;
@@ -45,7 +45,7 @@ namespace SH
             playerManager = GetComponent<PlayerManager>();
             rigidbody = GetComponent<Rigidbody>();
             inputHandler = GetComponent<InputHandler>();
-            animationHandler = GetComponentInChildren<AnimationHandler>();
+            animationHandler = GetComponentInChildren<PlayerAnimatorManager>();
             cameraObject = Camera.main.transform;
             myTransform = transform;
             animationHandler.Initialize();

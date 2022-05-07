@@ -20,11 +20,11 @@ namespace SH
         {
             PlayerInventory playerInventory;
             PlayerLocomotion playerLocomotion;
-            AnimationHandler animationHandler;
+            PlayerAnimatorManager animationHandler;
 
             playerInventory = playerManager.GetComponent<PlayerInventory>();
             playerLocomotion = playerManager.GetComponent<PlayerLocomotion>();
-            animationHandler = playerManager.GetComponentInChildren<AnimationHandler>();
+            animationHandler = playerManager.GetComponentInChildren<PlayerAnimatorManager>();
 
             playerLocomotion.rigidbody.velocity = Vector3.zero; //Stop when picking item
             animationHandler.PlayTargetAnimation("Pick Up Item", true);

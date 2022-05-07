@@ -43,7 +43,7 @@ namespace SH
         PlayerManager playerManager;
         UIManager uIManager;
         CameraHandler cameraHandler;
-        AnimationHandler animationHandler; 
+        PlayerAnimatorManager animationHandler; 
         WeaponSlotManager weaponSlotManager;
 
         Vector2 movementInput;
@@ -59,7 +59,7 @@ namespace SH
             weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
             uIManager = FindObjectOfType<UIManager>();
             cameraHandler = FindObjectOfType<CameraHandler>();
-            animationHandler = GetComponentInChildren<AnimationHandler>();
+            animationHandler = GetComponentInChildren<PlayerAnimatorManager>();
         }
 
         public void OnEnable()

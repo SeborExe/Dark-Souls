@@ -21,12 +21,12 @@ namespace SH
         [Header("Spell Discription")]
         [TextArea] public string spellDiscription;
 
-        public virtual void AttemptToCastSpell(AnimationHandler animationHandler, PlayerStats playerStats)
+        public virtual void AttemptToCastSpell(PlayerAnimatorManager animationHandler, PlayerStats playerStats)
         {
             Debug.Log("You attempt to cast a spell");
         }
 
-        public virtual void SuccessfullyCastSpell(AnimationHandler animationHandler, PlayerStats playerStats)
+        public virtual void SuccessfullyCastSpell(PlayerAnimatorManager animationHandler, PlayerStats playerStats)
         {
             Debug.Log("You successfuly cast a spell");
             playerStats.DeductManaPoints(manaCost);

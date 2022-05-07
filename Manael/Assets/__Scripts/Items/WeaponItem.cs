@@ -32,6 +32,10 @@ namespace SH
         public bool isFaithCaster;
         public bool isPyroCaster;
         public bool isMeleeWeapon;
+
+        [Header("Damage")]
+        public int baseDamage = 25;
+        public int criticalDamageMultiplier = 4;
     }
 }
 

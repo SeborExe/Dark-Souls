@@ -6,7 +6,7 @@ namespace SH
 {
     public class PlayerAttacker : MonoBehaviour
     {
-        AnimationHandler animationHandler;
+        PlayerAnimatorManager animationHandler;
         PlayerManager playerManager;
         PlayerStats playerStats;
         PlayerInventory playerInventory;
@@ -18,7 +18,7 @@ namespace SH
 
         private void Awake()
         {
-            animationHandler = GetComponent<AnimationHandler>();
+            animationHandler = GetComponent<PlayerAnimatorManager>();
             playerManager = GetComponentInParent<PlayerManager>();
             playerStats = GetComponentInParent<PlayerStats>();
             playerInventory = GetComponentInParent<PlayerInventory>();
@@ -144,6 +144,7 @@ namespace SH
                 out hit, 0.5f, backStabLayer)) 
             {
                 CharacterManager enemyCharacterManager = hit.transform.gameObject.GetComponentInParent<CharacterManager>();
+                DamageCollider rightWeapon = weaponSlotManager.rightHandDamageCollider;
 
                 if (enemyCharacterManager != null)
                 {
@@ -156,6 +157,9 @@ namespace SH
                     Quaternion tr = Quaternion.LookRotation(rotationDirection);
                     Quaternion targetRotation = Quaternion.Slerp(playerManager.transform.rotation, tr, 500 * Time.deltaTime);
                     playerManager.transform.rotation = targetRotation;
+
+                    int criticalDamage = playerInventory.rightWeapon.criticalDamageMultiplier * rightWeapon.currentWeaponDamage;
+                    enemyCharacterManager.pendingCriticalDamage = criticalDamage;
 
                     animationHandler.PlayTargetAnimation("BackStab", true);
                     enemyCharacterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Back Stabbed", true);

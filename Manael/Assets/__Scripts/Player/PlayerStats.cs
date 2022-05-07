@@ -11,7 +11,7 @@ namespace SH
         ManaBar manaBar;
         PlayerManager playerManager;
 
-        AnimationHandler animationHandler;
+        PlayerAnimatorManager animationHandler;
 
         float staminaRegenerationAmount = 1;
         float staminaRegenerationTimer = 0;
@@ -19,7 +19,7 @@ namespace SH
         private void Awake()
         {
             playerManager = GetComponent<PlayerManager>();
-            animationHandler = GetComponentInChildren<AnimationHandler>();
+            animationHandler = GetComponentInChildren<PlayerAnimatorManager>();
 
             healthBar = FindObjectOfType<HealthBar>();
             staminaBar = FindObjectOfType<StaminaBar>();
@@ -73,6 +73,17 @@ namespace SH
             {
                 currentHealth = 0;
                 animationHandler.PlayTargetAnimation("Dead_01", true);
+                isDead = true;
+            }
+        }
+
+        public void TakeDamageNoAnimation(int damage)
+        {
+            currentHealth -= damage;
+
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
                 isDead = true;
             }
         }
