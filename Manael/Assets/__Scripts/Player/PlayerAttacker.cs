@@ -157,7 +157,7 @@ namespace SH
                     Quaternion targetRotation = Quaternion.Slerp(playerManager.transform.rotation, tr, 500 * Time.deltaTime);
                     playerManager.transform.rotation = targetRotation;
 
-                    animationHandler.PlayTargetAnimation("Back Stab", true);
+                    animationHandler.PlayTargetAnimation("BackStab", true);
                     enemyCharacterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Back Stabbed", true);
                 }
             }
