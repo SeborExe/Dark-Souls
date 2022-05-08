@@ -6419,6 +6419,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: cf909151d152d7340ac63590b4e9cdd2,
         type: 2}
+    - target: {fileID: 1238094198, guid: a295eb70b3f8ebd49b6ac46f0364be10, type: 3}
+      propertyPath: staminaLevel
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3715845956765069212, guid: a295eb70b3f8ebd49b6ac46f0364be10,
         type: 3}
       propertyPath: m_Name

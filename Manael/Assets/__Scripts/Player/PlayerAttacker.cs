@@ -28,6 +28,9 @@ namespace SH
 
         public void HandleWeaponCombo(WeaponItem weapon)
         {
+            if (playerStats.currentStamina <= 0)
+                return;
+
             if (inputHandler.comboFlag)
             {
                 animationHandler.anim.SetBool("canDoCombo", false);
@@ -45,6 +48,9 @@ namespace SH
 
         public void HandleLightAttack(WeaponItem weapon)
         {
+            if (playerStats.currentStamina <= 0)
+                return;
+
             weaponSlotManager.attackingWeapon = weapon;
 
             if (inputHandler.twoHandFlag)
@@ -61,7 +67,11 @@ namespace SH
 
         public void HandleHeavyAttack(WeaponItem weapon)
         {
+            if (playerStats.currentStamina <= 0)
+                return;
+
             weaponSlotManager.attackingWeapon = weapon;
+
             if (inputHandler.twoHandFlag)
             {
 
@@ -138,6 +148,9 @@ namespace SH
 
         public void AttemptBackStabOrRipost()
         {
+            if (playerStats.currentStamina <= 0)
+                return;
+
             RaycastHit hit;
 
             if (Physics.Raycast(inputHandler.criticalAttackRaycastStartPoint.position, transform.TransformDirection(Vector3.forward),

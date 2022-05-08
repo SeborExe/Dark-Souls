@@ -13,7 +13,7 @@ namespace SH
 
         PlayerAnimatorManager animationHandler;
 
-        float staminaRegenerationAmount = 1;
+        [SerializeField] float staminaRegenerationAmount = 25;
         float staminaRegenerationTimer = 0;
 
         private void Awake()

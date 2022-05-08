@@ -108,23 +108,29 @@ namespace SH
 
         private void LoadLeftWeaponCollider()
         {
-            leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
-            leftHandDamageCollider.currentWeaponDamage = playerInventory.leftWeapon.baseDamage;
+            if (leftHandDamageCollider != null)
+            {
+                leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+                leftHandDamageCollider.currentWeaponDamage = playerInventory.leftWeapon.baseDamage;
+            }
         }
 
         private void LoadRightWeaponCollider()
         {
-            rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
-            rightHandDamageCollider.currentWeaponDamage = playerInventory.rightWeapon.baseDamage;
+            if (rightHandDamageCollider != null)
+            {
+                rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+                rightHandDamageCollider.currentWeaponDamage = playerInventory.rightWeapon.baseDamage;
+            }
         }
 
         public void OpenDamageCollider()
         {
-            if (playerManager.isUsingRightHand)
+            if (playerManager.isUsingRightHand && rightHandDamageCollider != null)
             {
                 rightHandDamageCollider.EnabelDamageCollider();
             }
-            else if (playerManager.isUsingLeftHand)
+            else if (playerManager.isUsingLeftHand && leftHandDamageCollider != null)
             {
                 leftHandDamageCollider.EnabelDamageCollider();
             }
