@@ -114,6 +114,7 @@ namespace SH
             }
         }
 
+        #region Player Interactions
         public void CheckForInteractable()
         {
             RaycastHit hit;
@@ -145,6 +146,15 @@ namespace SH
                 }
             }
         }
+
+        public void OpenChectInteraction(Transform playrStandingPosition)
+        {
+            playerLocomotion.rigidbody.velocity = Vector3.zero; //Stop player
+            transform.position = playrStandingPosition.transform.position;
+            playerAnimatorManager.PlayTargetAnimation("Open Chest", true);
+        }
+
+        #endregion
 
         #region Show text after pick up item
         public void PickUpItem()
