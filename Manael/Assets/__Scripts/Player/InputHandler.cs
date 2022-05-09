@@ -17,6 +17,7 @@ namespace SH
         public bool y_Input;
         public bool rb_Input;
         public bool rt_Input;
+        public bool critical_attack_Input;
         public bool jump_Input;
         public bool inventory_Input;
         public bool lockOn_Input;
@@ -42,11 +43,14 @@ namespace SH
         PlayerManager playerManager;
         UIManager uIManager;
         CameraHandler cameraHandler;
-        AnimationHandler animationHandler; 
+        PlayerAnimatorManager animationHandler; 
         WeaponSlotManager weaponSlotManager;
+        PlayerStats playerStats;
 
         Vector2 movementInput;
         Vector2 cameraInput;
+
+        public Transform criticalAttackRaycastStartPoint;
 
         private void Awake()
         {
@@ -56,7 +60,8 @@ namespace SH
             weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
             uIManager = FindObjectOfType<UIManager>();
             cameraHandler = FindObjectOfType<CameraHandler>();
-            animationHandler = GetComponentInChildren<AnimationHandler>();
+            animationHandler = GetComponentInChildren<PlayerAnimatorManager>();
+            playerStats = GetComponent<PlayerStats>();
         }
 
         public void OnEnable()
@@ -71,12 +76,15 @@ namespace SH
                 inputActions.PlayerQuickSlots.DPadRight.performed += i => d_pad_right = true;
                 inputActions.PlayerQuickSlots.DPadLeft.performed += i => d_pad_left = true;
                 inputActions.PlayerActions.A.performed += i => a_Input = true;
+                inputActions.PlayerActions.Roll.performed += i => b_Input = true;
+                inputActions.PlayerActions.Roll.canceled += i => b_Input = false;
                 inputActions.PlayerActions.Jump.performed += i => jump_Input = true;
                 inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
                 inputActions.PlayerActions.LockOn.performed += i => lockOn_Input = true;
                 inputActions.PlayerMovement.LockOnTargetRight.performed += i => right_Stick_Right_Input = true;
                 inputActions.PlayerMovement.LockOnTargetLeft.performed += i => right_Stick_Left_Input = true;
                 inputActions.PlayerActions.Y.performed += i => y_Input = true;
+                inputActions.PlayerActions.CriticalAttack.performed += i => critical_attack_Input = true;
             }
 
             inputActions.Enable();
@@ -96,6 +104,7 @@ namespace SH
             HandleInventoryWindow();
             HandleLockOnInput();
             HandleTwoHandInput();
+            HandleCriticalAttackInput();
         }
 
         private void HandleMoveInput(float delta)
@@ -109,18 +118,27 @@ namespace SH
 
         private void HandleRollInput(float delta)
         {
-            b_Input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
-            sprintFlag = b_Input;
-
             if (b_Input)
             {
                 rollInputTimer += delta;
+
+                if (playerStats.currentStamina <= 0)
+                {
+                    b_Input = false;
+                    sprintFlag = false;
+                }
+
+                if (moveAmount > 0.5f && playerStats.currentStamina > 0)
+                {
+                    sprintFlag = true;
+                }
             }
             else
             {
+                sprintFlag = false;
+
                 if (rollInputTimer > 0 && rollInputTimer < 0.5f)
                 {
-                    sprintFlag = false;
                     rollFlag = true;
                 }
 
@@ -243,6 +261,15 @@ namespace SH
                     weaponSlotManager.LoadWeaponOnSlot(playerInventory.rightWeapon, false);
                     weaponSlotManager.LoadWeaponOnSlot(playerInventory.leftWeapon, true);
                 }
+            }
+        }
+
+        private void HandleCriticalAttackInput()
+        {
+            if (critical_attack_Input)
+            {
+                critical_attack_Input = false;
+                playerAttacker.AttemptBackStabOrRipost();
             }
         }
     }

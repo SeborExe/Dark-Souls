@@ -9,7 +9,7 @@ namespace SH
     {
         public int healAmount;
 
-        public override void AttemptToCastSpell(AnimationHandler animationHandler, PlayerStats playerStats)
+        public override void AttemptToCastSpell(PlayerAnimatorManager animationHandler, PlayerStats playerStats)
         {
             base.AttemptToCastSpell(animationHandler, playerStats);
             GameObject instantiatedWarpUpSpellFX = Instantiate(spallWarmUpFX, animationHandler.transform);
@@ -17,7 +17,7 @@ namespace SH
             Debug.Log("Attepting cast spell...");
         }
 
-        public override void SuccessfullyCastSpell(AnimationHandler animationHandler, PlayerStats playerStats)
+        public override void SuccessfullyCastSpell(PlayerAnimatorManager animationHandler, PlayerStats playerStats)
         {
             base.SuccessfullyCastSpell(animationHandler, playerStats);
             GameObject instantiatedSpellFX = Instantiate(spellCastFX, animationHandler.transform);

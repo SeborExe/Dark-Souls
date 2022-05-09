@@ -25,6 +25,17 @@ namespace SH
             return maxHealth;
         }
 
+        public void TakeDamageNoAnimation(int damage)
+        {
+            currentHealth -= damage;
+
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                isDead = true;
+            }
+        }
+
         public void TakeDamage(int damage)
         {
             if (isDead) return;

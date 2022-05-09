@@ -13,6 +13,7 @@ namespace SH
         Animator anim;
         InteractableUI interactableUI;
         PlayerStats playerStats;
+        PlayerAnimatorManager playerAnimatorManager;
 
         [SerializeField] GameObject interactableUIGameObject;
         public GameObject itemInteractableObject;
@@ -35,17 +36,19 @@ namespace SH
         private void Awake()
         {
             cameraHandler = FindObjectOfType<CameraHandler>();
-        }
+            backStabCollider = GetComponentInChildren<BackStabCollider>();
 
-
-        private void Start()
-        {
             inputHandler = GetComponent<InputHandler>();
             anim = GetComponentInChildren<Animator>();
             playerStats = GetComponent<PlayerStats>();
             playerLocomotion = GetComponent<PlayerLocomotion>();
             interactableUI = FindObjectOfType<InteractableUI>();
+            playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
+        }
 
+
+        private void Start()
+        {
             originalTransparency = itemInteractableObject.GetComponent<Image>().color.a;
         }
 
@@ -59,6 +62,8 @@ namespace SH
             isUsingLeftHand = anim.GetBool("isUsingLeftHand");
             isInvulnerable = anim.GetBool("isInvulnerable");
             anim.SetBool("isInAir", isInAir);
+            anim.SetBool("isDead", playerStats.isDead);
+            playerAnimatorManager.canRotate = anim.GetBool("canRotate");
 
             inputHandler.TickInput(delta);
             playerLocomotion.HandleJumping();
@@ -73,6 +78,7 @@ namespace SH
         {
             float delta = Time.fixedDeltaTime;
             playerLocomotion.HandleMovement(delta);
+            playerLocomotion.HandlerRotation(delta);
             playerLocomotion.HandleFall(delta, playerLocomotion.moveDirection);
 
 
@@ -108,6 +114,7 @@ namespace SH
             }
         }
 
+        #region Player Interactions
         public void CheckForInteractable()
         {
             RaycastHit hit;
@@ -139,6 +146,15 @@ namespace SH
                 }
             }
         }
+
+        public void OpenChectInteraction(Transform playrStandingPosition)
+        {
+            playerLocomotion.rigidbody.velocity = Vector3.zero; //Stop player
+            transform.position = playrStandingPosition.transform.position;
+            playerAnimatorManager.PlayTargetAnimation("Open Chest", true);
+        }
+
+        #endregion
 
         #region Show text after pick up item
         public void PickUpItem()

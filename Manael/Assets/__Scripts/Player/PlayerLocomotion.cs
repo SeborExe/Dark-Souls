@@ -10,10 +10,12 @@ namespace SH
         Transform cameraObject;
         InputHandler inputHandler;
         PlayerManager playerManager;
+        PlayerStats playerStats;
+
         public Vector3 moveDirection;
 
         [HideInInspector] public Transform myTransform;
-        [HideInInspector] public AnimationHandler animationHandler;
+        [HideInInspector] public PlayerAnimatorManager animationHandler;
 
         public new Rigidbody rigidbody;
         public GameObject normalCamera;
@@ -35,17 +37,23 @@ namespace SH
         [SerializeField] float rotationSpeed = 10f;
         [SerializeField] float fallingSpeed = 45f;
 
+        [Header("Stamina costs")]
+        [SerializeField] int rollStaminaCost = 15;
+        [SerializeField] int backStabStaminaCost = 12;
+        [SerializeField] int sprintStaminaCost = 1;
+
         private void Awake()
         {
             cameraHandler = FindObjectOfType<CameraHandler>();
+            playerManager = GetComponent<PlayerManager>();
+            rigidbody = GetComponent<Rigidbody>();
+            inputHandler = GetComponent<InputHandler>();
+            animationHandler = GetComponentInChildren<PlayerAnimatorManager>();
+            playerStats = GetComponent<PlayerStats>();
         }
 
         private void Start()
         {
-            playerManager = GetComponent<PlayerManager>();
-            rigidbody = GetComponent<Rigidbody>();
-            inputHandler = GetComponent<InputHandler>();
-            animationHandler = GetComponentInChildren<AnimationHandler>();
             cameraObject = Camera.main.transform;
             myTransform = transform;
             animationHandler.Initialize();
@@ -60,59 +68,62 @@ namespace SH
         Vector3 normalVector;
         Vector3 targetPosition;
 
-        private void HandlerRotation(float delta)
+        public void HandlerRotation(float delta)
         {
-            if (inputHandler.lockOnFlag)
+            if (animationHandler.canRotate)
             {
-                if (inputHandler.sprintFlag || inputHandler.rollFlag)
+                if (inputHandler.lockOnFlag)
+                {
+                    if (inputHandler.sprintFlag || inputHandler.rollFlag)
+                    {
+                        Vector3 targetDirection = Vector3.zero;
+                        targetDirection = cameraHandler.cameraTransform.forward * inputHandler.vertical;
+                        targetDirection += cameraHandler.cameraTransform.right * inputHandler.horizontal;
+                        targetDirection.Normalize();
+                        targetDirection.y = 0;
+
+                        if (targetDirection == Vector3.zero)
+                        {
+                            targetDirection = transform.forward;
+                        }
+
+                        Quaternion tr = Quaternion.LookRotation(targetDirection);
+                        Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, rotationSpeed * Time.deltaTime);
+
+                        transform.rotation = targetRotation;
+                    }
+                    else
+                    {
+                        Vector3 rotationDirection = moveDirection;
+                        rotationDirection = cameraHandler.currentLockOnTarget.position - transform.position;
+                        rotationDirection.y = 0;
+                        rotationDirection.Normalize();
+                        Quaternion tr = Quaternion.LookRotation(rotationDirection);
+                        Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, rotationSpeed * Time.deltaTime);
+                        transform.rotation = targetRotation;
+                    }
+                }
+                else
                 {
                     Vector3 targetDirection = Vector3.zero;
-                    targetDirection = cameraHandler.cameraTransform.forward * inputHandler.vertical;
-                    targetDirection += cameraHandler.cameraTransform.right * inputHandler.horizontal;
+                    float moveOveride = inputHandler.moveAmount;
+
+                    targetDirection = cameraObject.forward * inputHandler.vertical;
+                    targetDirection += cameraObject.right * inputHandler.horizontal;
+
                     targetDirection.Normalize();
                     targetDirection.y = 0;
 
                     if (targetDirection == Vector3.zero)
-                    {
-                        targetDirection = transform.forward;
-                    }
+                        targetDirection = myTransform.forward;
+
+                    float rs = rotationSpeed;
 
                     Quaternion tr = Quaternion.LookRotation(targetDirection);
-                    Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, rotationSpeed * Time.deltaTime);
+                    Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rs * delta);
 
-                    transform.rotation = targetRotation;
+                    myTransform.rotation = targetRotation;
                 }
-                else
-                {
-                    Vector3 rotationDirection = moveDirection;
-                    rotationDirection = cameraHandler.currentLockOnTarget.position - transform.position;
-                    rotationDirection.y = 0;
-                    rotationDirection.Normalize();
-                    Quaternion tr = Quaternion.LookRotation(rotationDirection);
-                    Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, rotationSpeed * Time.deltaTime);
-                    transform.rotation = targetRotation;
-                }
-            }
-            else
-            {
-                Vector3 targetDirection = Vector3.zero;
-                float moveOveride = inputHandler.moveAmount;
-
-                targetDirection = cameraObject.forward * inputHandler.vertical;
-                targetDirection += cameraObject.right * inputHandler.horizontal;
-
-                targetDirection.Normalize();
-                targetDirection.y = 0;
-
-                if (targetDirection == Vector3.zero)
-                    targetDirection = myTransform.forward;
-
-                float rs = rotationSpeed;
-
-                Quaternion tr = Quaternion.LookRotation(targetDirection);
-                Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rs * delta);
-
-                myTransform.rotation = targetRotation;
             }
         }
 
@@ -136,6 +147,7 @@ namespace SH
                 speed = sprintSpeed;
                 playerManager.isSprinting = true;
                 moveDirection *= speed;
+                playerStats.TakeStaminaDamage(sprintStaminaCost);
             }
             else
             {
@@ -162,16 +174,14 @@ namespace SH
             {
                 animationHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
             }
-
-            if (animationHandler.canRotate)
-            {
-                HandlerRotation(delta);
-            }
         }
 
         public void HandleRollingAndSprinting(float delta)
         {
             if (animationHandler.anim.GetBool("isInteracting"))
+                return;
+
+            if (playerStats.currentStamina <= 0)
                 return;
 
             if (inputHandler.rollFlag)
@@ -185,10 +195,12 @@ namespace SH
                     moveDirection.y = 0;
                     Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
                     myTransform.rotation = rollRotation;
+                    playerStats.TakeStaminaDamage(rollStaminaCost);
                 }
                 else
                 {
                     animationHandler.PlayTargetAnimation("backStep", true);
+                    playerStats.TakeStaminaDamage(backStabStaminaCost);
                 }
             }
         }
@@ -288,6 +300,9 @@ namespace SH
         public void HandleJumping()
         {
             if (playerManager.isInteracting) return;
+
+            if (playerStats.currentStamina <= 0)
+                return;
 
             if (inputHandler.jump_Input)
             {

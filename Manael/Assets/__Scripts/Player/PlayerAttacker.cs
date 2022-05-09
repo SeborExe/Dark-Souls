@@ -6,7 +6,7 @@ namespace SH
 {
     public class PlayerAttacker : MonoBehaviour
     {
-        AnimationHandler animationHandler;
+        PlayerAnimatorManager animationHandler;
         PlayerManager playerManager;
         PlayerStats playerStats;
         PlayerInventory playerInventory;
@@ -14,9 +14,11 @@ namespace SH
         WeaponSlotManager weaponSlotManager;
         public string lastAttack;
 
+        LayerMask backStabLayer = 1 << 12;
+
         private void Awake()
         {
-            animationHandler = GetComponent<AnimationHandler>();
+            animationHandler = GetComponent<PlayerAnimatorManager>();
             playerManager = GetComponentInParent<PlayerManager>();
             playerStats = GetComponentInParent<PlayerStats>();
             playerInventory = GetComponentInParent<PlayerInventory>();
@@ -26,6 +28,9 @@ namespace SH
 
         public void HandleWeaponCombo(WeaponItem weapon)
         {
+            if (playerStats.currentStamina <= 0)
+                return;
+
             if (inputHandler.comboFlag)
             {
                 animationHandler.anim.SetBool("canDoCombo", false);
@@ -43,6 +48,9 @@ namespace SH
 
         public void HandleLightAttack(WeaponItem weapon)
         {
+            if (playerStats.currentStamina <= 0)
+                return;
+
             weaponSlotManager.attackingWeapon = weapon;
 
             if (inputHandler.twoHandFlag)
@@ -59,7 +67,11 @@ namespace SH
 
         public void HandleHeavyAttack(WeaponItem weapon)
         {
+            if (playerStats.currentStamina <= 0)
+                return;
+
             weaponSlotManager.attackingWeapon = weapon;
+
             if (inputHandler.twoHandFlag)
             {
 
@@ -133,6 +145,40 @@ namespace SH
         }
 
         #endregion
+
+        public void AttemptBackStabOrRipost()
+        {
+            if (playerStats.currentStamina <= 0)
+                return;
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(inputHandler.criticalAttackRaycastStartPoint.position, transform.TransformDirection(Vector3.forward),
+                out hit, 0.5f, backStabLayer)) 
+            {
+                CharacterManager enemyCharacterManager = hit.transform.gameObject.GetComponentInParent<CharacterManager>();
+                DamageCollider rightWeapon = weaponSlotManager.rightHandDamageCollider;
+
+                if (enemyCharacterManager != null)
+                {
+                    //Check for team mate id
+                    playerManager.transform.position = enemyCharacterManager.backStabCollider.backStabberStandPoint.position;
+                    Vector3 rotationDirection = playerManager.transform.root.eulerAngles;
+                    rotationDirection = hit.transform.position - playerManager.transform.position;
+                    rotationDirection.y = 0;
+                    rotationDirection.Normalize();
+                    Quaternion tr = Quaternion.LookRotation(rotationDirection);
+                    Quaternion targetRotation = Quaternion.Slerp(playerManager.transform.rotation, tr, 500 * Time.deltaTime);
+                    playerManager.transform.rotation = targetRotation;
+
+                    int criticalDamage = playerInventory.rightWeapon.criticalDamageMultiplier * rightWeapon.currentWeaponDamage;
+                    enemyCharacterManager.pendingCriticalDamage = criticalDamage;
+
+                    animationHandler.PlayTargetAnimation("BackStab", true);
+                    enemyCharacterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Back Stabbed", true);
+                }
+            }
+        }
     }
 }
 

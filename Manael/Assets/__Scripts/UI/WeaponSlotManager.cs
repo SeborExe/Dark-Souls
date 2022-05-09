@@ -10,9 +10,10 @@ namespace SH
         public WeaponHolderSlot rightHandSlot;
         WeaponHolderSlot backSlot;
         PlayerManager playerManager;
+        PlayerInventory playerInventory; 
 
-        DamageCollider leftHandDamageCollider;
-        DamageCollider rightHandDamageCollider;
+        public DamageCollider leftHandDamageCollider;
+        public DamageCollider rightHandDamageCollider;
 
         public WeaponItem attackingWeapon;
 
@@ -26,6 +27,7 @@ namespace SH
         private void Awake()
         {
             playerManager = GetComponentInParent<PlayerManager>();
+            playerInventory = GetComponentInParent<PlayerInventory>();
             animator = GetComponent<Animator>();
             quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
             playerStats = GetComponentInParent<PlayerStats>();
@@ -106,21 +108,29 @@ namespace SH
 
         private void LoadLeftWeaponCollider()
         {
-            leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+            if (leftHandDamageCollider != null)
+            {
+                leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+                leftHandDamageCollider.currentWeaponDamage = playerInventory.leftWeapon.baseDamage;
+            }
         }
 
         private void LoadRightWeaponCollider()
         {
-            rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+            if (rightHandDamageCollider != null)
+            {
+                rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+                rightHandDamageCollider.currentWeaponDamage = playerInventory.rightWeapon.baseDamage;
+            }
         }
 
         public void OpenDamageCollider()
         {
-            if (playerManager.isUsingRightHand)
+            if (playerManager.isUsingRightHand && rightHandDamageCollider != null)
             {
                 rightHandDamageCollider.EnabelDamageCollider();
             }
-            else if (playerManager.isUsingLeftHand)
+            else if (playerManager.isUsingLeftHand && leftHandDamageCollider != null)
             {
                 leftHandDamageCollider.EnabelDamageCollider();
             }

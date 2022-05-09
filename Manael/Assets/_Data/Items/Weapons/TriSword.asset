@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: 6f8d7e01d063d214bb16f580a492ffb4, type: 3}
   itemName: TriSword
-  modelPrefab: {fileID: 6012219410432245956, guid: ab0098e984174ae40bd4615f2a44bc00, type: 3}
+  modelPrefab: {fileID: 6012219410432245956, guid: ab0098e984174ae40bd4615f2a44bc00,
+    type: 3}
   isUnarmed: 0
   Right_Hand_Idle: Right_Arm_Idle_01
   Left_Hand_Idle: Left_Arm_Idle_01
@@ -31,3 +32,5 @@ MonoBehaviour:
   isFaithCaster: 0
   isPyroCaster: 0
   isMeleeWeapon: 1
+  baseDamage: 25
+  criticalDamageMultiplier: 4
