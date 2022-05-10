@@ -171,8 +171,16 @@ namespace SH
                     Quaternion targetRotation = Quaternion.Slerp(playerManager.transform.rotation, tr, 500 * Time.deltaTime);
                     playerManager.transform.rotation = targetRotation;
 
-                    int criticalDamage = playerInventory.rightWeapon.criticalDamageMultiplier * rightWeapon.currentWeaponDamage;
-                    enemyCharacterManager.pendingCriticalDamage = criticalDamage;
+                    if (rightWeapon != null)
+                    {
+                        int criticalDamage = playerInventory.rightWeapon.criticalDamageMultiplier * rightWeapon.currentWeaponDamage;
+                        enemyCharacterManager.pendingCriticalDamage = criticalDamage;
+                    }
+                    else
+                    {
+                        int criticalDamage = playerInventory.rightWeapon.criticalDamageMultiplier * playerInventory.rightWeapon.baseDamage;
+                        enemyCharacterManager.pendingCriticalDamage = criticalDamage;
+                    }
 
                     animationHandler.PlayTargetAnimation("BackStab", true);
                     enemyCharacterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Back Stabbed", true);
