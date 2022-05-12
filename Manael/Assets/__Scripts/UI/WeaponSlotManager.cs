@@ -108,20 +108,14 @@ namespace SH
 
         private void LoadLeftWeaponCollider()
         {
-            if (leftHandDamageCollider != null)
-            {
                 leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
                 leftHandDamageCollider.currentWeaponDamage = playerInventory.leftWeapon.baseDamage;
-            }
         }
 
         private void LoadRightWeaponCollider()
         {
-            if (rightHandDamageCollider != null)
-            {
                 rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
                 rightHandDamageCollider.currentWeaponDamage = playerInventory.rightWeapon.baseDamage;
-            }
         }
 
         public void OpenDamageCollider()

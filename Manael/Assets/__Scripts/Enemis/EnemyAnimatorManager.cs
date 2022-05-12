@@ -22,6 +22,22 @@ namespace SH
             enemyManager.pendingCriticalDamage = 0;
         }
 
+        public void AwardSoulsOnDeath()
+        {
+            PlayerStats playerStats = FindObjectOfType<PlayerStats>();
+            SoulsCount soulsCout = FindObjectOfType<SoulsCount>();
+
+            if (playerStats != null)
+            {
+                playerStats.AddSouls(enemyStats.soulsAwardedOnDeath);
+
+                if (soulsCout != null)
+                {
+                    soulsCout.SetSoulsCountText(playerStats.soulCount);
+                }
+            }
+        }
+
         private void OnAnimatorMove()
         {
             float delta = Time.deltaTime;

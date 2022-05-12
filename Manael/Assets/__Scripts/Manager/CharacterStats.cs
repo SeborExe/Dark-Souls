@@ -18,6 +18,8 @@ namespace SH
         public float maxMana;
         public float currentMana;
 
+        public int soulCount = 0;
+
         public bool isDead;
     }
 }
